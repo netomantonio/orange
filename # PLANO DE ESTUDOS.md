@@ -3,7 +3,7 @@
 ### FASE 2
 
 * [X] Curso de Servlet até dia 9/05
-* [ ] Curso de HTTP até dia 10/05
+* [X] Curso de HTTP até dia 10/05
 * [ ] Curso de SQL com MySQL - Curso 1 até dia 11/05
 * [ ] Curso de SQL com MySQL - Curso 2 até dia 12/05
 * [ ] Curso - Java e JPA: Persista seus objetos com a JPA2 e Hibernate até dia 13/05
