@@ -4,7 +4,7 @@
 
 * [X] Curso de Servlet até dia 9/05
 * [X] Curso de HTTP até dia 10/05
-* [ ] Curso de SQL com MySQL - Curso 1 até dia 11/05
+* [X] Curso de SQL com MySQL - Curso 1 até dia 11/05
 * [ ] Curso de SQL com MySQL - Curso 2 até dia 12/05
 * [ ] Curso - Java e JPA: Persista seus objetos com a JPA2 e Hibernate até dia 13/05
 * [ ] Spring Boot API REST: Construa uma API até dia 14/05

@@ -499,3 +499,30 @@ Além disso, no HTTP2, as requisições e respostas podem ser paralelas. Não pr
 Outro assunto foi que os cabeçalhos guardam status. Quando enviamos uma requisição, a próxima, para o mesmo domínio, não precisa enviar os mesmo dados que já foram trafegados na última. Conclui-se que no HTTP2 isso é evitado, ou seja, menos informação enviada, menos dados que enviamos, menos banda que usamos do usuário, mais feliz ele fica.
 
 Além de ***Headers Stateful***, vimos também que o HTTP2 especifica o famoso ***Server-push***, que é o ato do servidor enviar dados sem que o browser tenha pedido, que foi o que aconteceu lá no **index.html**. O HTTP2 pode enviar dados diretamente para o browser sem ficar esperando uma requisição. Assim, ele dá um passo além.
+
+
+
+# Exercício final
+
+
+Você ficou responsável por definir o melhor uso do protocolo HTTP para possibilitar a criação de uma API que realiza pesquisas de passagens de avião e cadastro de compradores.
+
+Para a parte de pesquisa, nos diga qual verbo http você vai utilizar e também como vai passar os argumentos. Além disso, é necessário que você explique o motivo da decisão.
+
+**Resposta**: Para a realização de pesquisas irei utilizar o verbo http `GET` passando os argumentos como parâmetros na `URL` .
+
+**Motivo da Escolha**: Segundo as melhores práticas é necessário utilizar os verbos corretamente, e para consumir informações o padrão é `GET` quando está solicitando algo do servidor.
+
+Para a parte de cadastro, nos diga qual verbo http você vai utilizar e também como vai passar os argumentos. Outro ponto importante é:  Esse endereço pode receber dados via formulário normal(form-url-encoded) ou JSON. Como você vai adicionar essa flexibilidade? Explique o motivo da decisão.
+
+
+**Resposta**: Para a realização de cadastros irei utilizar o verbo http `POST` passando os argumentos no corpo da requisição e para flexibilizar o envio dos argumentos nos formatos form-url-encoded e Json, no Accept do cabeçalho usarei `Accept: application/x-www-form-urlencoded, application/json`
+
+**Motivo da Escolha**: Segundo as melhores práticas é necessário utilizar os verbos corretamente, e para persistir informações o padrão é `POST` quando está enviando informações para o servidor e ao utilizar este método devemos enviar as informações no corpo da requisição, no aceept poderia ter escolhido outro tipo de padrão que permitiria qualquer tipo de dado, porém para limitar entre os tipos indicado, escolhi por espeficicar os tipos de dados.
+
+Para fechar, é necessário que sempre que possível a comunicação seja feita com os dados criptografados. O que você sugeriria aqui e por que?
+
+
+**Resposta**: Para criptografar os dados incluiria uma entidade do cabeçalho chamada **`Content-Encoding`** com o valor **`GZIP`** e utilizaria o `HTTPS` 
+
+**Motivo da Escolha**: Desde o HTTP/1.1 é permitido utilizar o `GZIP` manualmente para comprimir a resposta tornando os dados menores e não legíveis facilmente, e utilizando o https que vai garantir que os dados sejam criptografados e somente o servidor possa descriptografar os dados, garantindo que a comunicação é segura.
