@@ -136,3 +136,47 @@ Funções para manipulação de dados numérios.
 * FLOOR() - para arredondar um valor para o primeiro valor inteiro abaixo
 * RAND() - gera um valor aleatório
 * SQRT() - retorna a raiz quadrada
+
+# Exercício
+
+Dado que todo(a) aluno(a) tem um email (máximo de 30 caracteres),nome (máximo de 30 caracteres) e idade (entre 1 e 100). O que você faria para representar essa estrutura no banco?
+
+Resposta: Criaria uma tabela chamada aluno com os campos requeridos, incluiria um campo ID do tipo numérico auto_increment para ser a chave primária.
+
+Motivo: Ao colocar ID numérico é devido a maior facilidade do SGBD lidar com numeros, auto_increment para que a cada novo registro um numero unico sequencial seja gerado.
+
+Dentro do bootcamp temos também um conjunto de avaliações que são respondidas pelas pessoas. Toda avaliação tem um título e uma descrição do que precisa ser feito. O que você faria para representar essa estrutura no banco?
+
+Resposta: Criaria uma tabela chamada avaliacao com os campos requeridos e incluiria o campo ID do tipo numerico auto_increment e chave primária.
+
+Cada aluno(a) responde uma ou mais avaliações que chamamos de cognitive walkthrough, ela tem que descrever os passos da solução dela para determinada situação problema. Toda resposta tem um campo aberto para que a pessoa consiga descrever a solução dela. É necessário que toda resposta seja linkada com a pessoa que a respondeu e também com a avaliação relativa àquela resposta. O que você faria para representar essa estrutura no banco de dados?
+
+Resposta: Criaria uma tabela chamada resposta com um campo ID do tipo numérico, auto_increment e chave primária, um campo chamado id_aluno, do tipo numérico e seria uma chave estrangeira do campo id da tabela aluno, também colocaria um campo id_avaliacao, do tipo numérico e chave estrangeira do campo id da tabela avaliacao, um campo chamado descricao do tipo text não nulo.
+
+Motivo: usaria as duas chaves estrageiras descritas para relacionar a resposta com o aluno e a avaliacao, evitando que uma resposta fique sem as informações de quem respondeu e a qual avaliação a resposta pertence, o campo descricao como text foi escolhido por sua capacidade ser maior que o tipo varchar, e não nulo pois é obrigatório ter uma resposta.
+
+Além de responder sua avaliação, a pessoa também responde um outro formulário onde ela corrige sua resposta em função da resposta de um mentor(a). Essa correção sempre tem uma nota de 1 a 10 e está linkada com a avaliação respondida pela própria pessoa. O que você faria para representar essa estrutura no banco de dados?
+
+Resposta: criaria uma tabela chamada auto_avaliacao, contendo o campo ID numérico, auto_incremente e chave primária, juntamente com um campo chamado nota de tipo numérico com o parâmetro enum, passando os valores de 1 a 10 e um campo id_resposta, do tipo numérico que é uma chave estrangeira para o campo id da tabela resposta.
+
+Motivo: foi escolhido a parâmetro enum para que não seja colocado valores que não correspondem ao solicitado.
+
+Agora que você montou a estrutura, temos algumas consultas que precisamos fazer.
+
+Precisamos saber todo mundo que respondeu uma avaliação com um título específico.
+
+select aluno.nome, aluno.email from aluno inner join resposta on aluno.id = resposta.id_aluno inner join avaliacao on avaliacao.titulo = "titulo específico"
+
+motivo: usar inner join para juntar os dados de outras tabelas, para poder gerar o resultado necessário
+
+Precisamos saber quantas respostas foram dadas por avaliação
+
+select avaliacao.titulo, count(resposta.id_avaliacao) from resposta inner join avaliacao on avaliacao.id = resposta.id_avaliacao group by avaliacao.titulo
+
+motivo: usar count() e group by para que a contagem seja representada de acordo com ada avaliacao.
+
+Precisamos da nota média da autocorreção por avaliação
+
+select avaliacao.titulo, avg(auto_avaliacao.nota) from auto_avaliacao inner join resposta on auto_avaliacao.id_resposta = resposta.id inner join avaliacao on resposta.id_avaliacao = avaliacao.id group by avaliacao.titulo
+
+motivo: usar inner join duas vezes para juntar dados de outras tabelas que se referem a mesma consulta, usando a função avg que calcula a média.
