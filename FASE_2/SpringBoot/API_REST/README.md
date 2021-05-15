@@ -110,7 +110,7 @@ findByCurso_Nome(String nomeCurso);
 ## Boas práticas
 
 * ResponseEntity\<DTO\>
-* UriCOmponentBuilder
+* UriComponentBuilder
 
 ## Retorno VOID
 
@@ -209,6 +209,12 @@ Para a parte do cadastro, todo(a) aluno(a) precisa de um nome, email e idade. O 
 
 Usando o que foi visto durante o curso,  descreva todos os passos que você faria para conseguir receber os dados, validar, fazer com que as informações sejam persistidas no banco de dados e retornar um status 200 para a aplicação cliente em caso de sucesso ou 400 em caso de falha de validação.
 
+Resposta: Criaria uma classe usando anotações RestController e RequestMapping, depois criaria um método cadastrar usando ResponseEntity, para receber os dados usaria as anotações RequestBody e Valid para uma class de formulario e UriComponentsBuilder, anotado com PostMapping e Transactional. Criaria a classe form, e usaria as anotações, NotNull, NotEmpty em todos os campos, usaria Length nos campos de texto e Min para a idade e os métodos getters e setters. Criaria uma classe modelo para aluno, fazendo as anotações JPA para que a classe seja mapeada no banco de dados, dentro do padrão JavaBean. Criaria uma Interface repository extendendo de JpaRepository passando a class modelo e o tipo de dado do Id. Dentro do metodo PostMapping do controller instanciaria um objeto da classe modelo usando o form recebido para preencher os dados, usaria o método save da interface repository criada passando o objeto criado e o retorno usando o método ok de ResponseEntity.
+
+Motivo: Aos usar as anotações Valid no controller, NotNull, NotEmpty, Length e Min na class form elas executarão o controle para verificar os dados passados, no caso de Lengh usaria o parametro max valendo 30 para que os dados não passe do tamanho estipulado, e a anotação Min passando como parametro value valendo 18. isso garantiria que nome e e-mail tenha no max 30 e a idade minima seja 18. Usar a anotação Transactional garante que caso esteja tudo correto, essas informações serão comitadas e persistidas no banco de dados. Todo esse conjunto garante que se estiver tudo certo o cliente irá receber status code 200 e se algo de errado acontecer recebera status code 400.
+
 Agora que o cadastro foi feito, é necessário que os detalhes de cada aluno(a) possam ser acessados. Uma restrição importante aqui, a identificação do(a) aluno(a) será feita pelo id do banco de dados e deve fazer parte do endereço de acesso. Para o detalhe, só precisamos exibir o nome e o email.
 
 Usando o que foi visto durante o curso,  descreva todos os passos que você faria desde conseguir tratar a requisição feita para determinado endereço até retornar as informações do(a) aluno(a) em formato JSON.
+
+Resposta: Criaria uma classe dto, apenas com nome e email, um construtor que recebe um objeto da classe modelo e os getters. Na classe controller criaria um novo método usando `ResponseEntity<ClasseDto> ` recebendo como parametro id do tipo Long com a anotação PathVariable, dentro do método instaciaria um objeto da Optional da classe Modelo usando a classe repository criada anteriormente juntamente com o método findById passando a id recebida. Criaria uma condiciona para verificar se existe o objeto no banco de dados, caso exista o retorno é através do método Ok  de ResponseEntity passando um objeto do tipo dto, caso a condicional seja false, o retorno é notFound de ResponseEntity.
