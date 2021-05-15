@@ -1,7 +1,6 @@
 # SPRING BOOT
 
-É um framework Java que facilita a criação de aplicativos autônomos baseados em spring. 
-
+É um framework Java que facilita a criação de aplicativos autônomos baseados em spring.
 
 ## Características
 
@@ -11,7 +10,6 @@
 * Configure automaticamente bibliotecas de primavera e terceiros sempre que possível
 * Fornecer recursos prontos para a produção, como métricas, verificações de saúde e configuração externada
 * Absolutamente nenhuma geração de código e nenhum requisito para configuração XML
-
 
 ## Começando
 
@@ -29,3 +27,13 @@
 * [De Zero a Herói com Bota de Primavera 2.0](https://content.pivotal.io/springone-platform-2017/from-zero-to-hero-with-spring-boot-brian-clozel)
 
 Você também pode participar do [Comunidade spring boot em Gitter](https://gitter.im/spring-projects/spring-boot)!
+
+# Resumo
+
+
+* Um resumo da história e evolução do Spring;
+* Que, para criar um projeto com **Spring Boot**, utilizamos o **Spring Initialzr**, através do site [https://start.spring.io](https://start.spring.io/);
+* Como importar um projeto com Spring Boot na IDE **Eclipse**;
+* Como é o **pom.xml** de uma aplicação que utiliza o Spring Boot;
+* Que, para inicializar o projeto com Spring Boot, devemos utilizar a classe com o método `main`;
+* Que, para criar um *controller*, utilizamos as anotações e .`@Controller``@RequestMapping`
