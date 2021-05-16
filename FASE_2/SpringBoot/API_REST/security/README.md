@@ -47,7 +47,6 @@ criar uma classe de autenticação anotada com `@Service` implementando a interf
 
 ## Resumo
 
-
 * Para utilizar o módulo do Spring Security, devemos adicioná-lo como dependência do projeto no arquivo **pom.xml**;
 * Para habilitar e configurar o controle de autenticação e autorização do projeto, devemos criar uma classe e anotá-la com `@Configuration` e `@EnableWebSecurity`;
 * Para liberar acesso a algum *endpoint* da nossa API, devemos chamar o método `http.authorizeRequests().antMatchers().permitAll()` dentro do método `configure(HttpSecurity http)`, que está na classe `SecurityConfigurations`;
@@ -82,7 +81,6 @@ Ao devolver o *token* para o cliente, foi enviado juntamente outra informação,
 
 ## Resumo
 
-
 * Em uma API Rest, não é uma boa prática utilizar autenticação com o uso de *session*;
 * Uma das maneiras de fazer autenticação *stateless* é utilizando *tokens* **JWT** (*Json Web Token*);
 * Para utilizar JWT na API, devemos adicionar a dependência da biblioteca **jjwt** no arquivo **pom.xml** do projeto;
@@ -92,7 +90,6 @@ Ao devolver o *token* para o cliente, foi enviado juntamente outra informação,
 * Para criar o *token* JWT, devemos utilizar a classe `Jwts`;
 * O *token* tem um período de expiração, que pode ser definida no arquivo **application.properties**;
 * Para injetar uma propriedade do arquivo **application.properties**, devemos utilizar a anotação `@Value`.
-
 
 # Autenticação via JWT
 
@@ -106,16 +103,27 @@ Por que não é possível fazer injeção de dependências com a anotação `@Au
 
 Porque ela não é um *bean* gerenciado pelo Spring. O filtro foi instanciado manualmente por nós, na classe `SecurityConfigurations` e portanto o Spring não consegue realizar injeção de dependências via `@Autowired`.
 
-
 necessário indicar ao Spring que o cliente está autenticado. Por que essa autenticação foi feita com a classe `SecurityContextHolder` e não com a `AuthenticationManager`?
 
 Porque a classe `AuthenticationManager` dispara o processo de autenticação via *username*/*password*. A classe `AuthenticationManager` deve ser utilizada apenas na lógica de autenticação via *username/password*, para a geração do *token*.
 
 ## Resumo
 
-
 * Para enviar o *token* JWT na requisição, é necessário adicionar o cabeçalho `Authorization`, passando como valor `Bearer token`;
 * Para criar um filtro no Spring, devemos criar uma classe que herda da classe `OncePerRequestFilter`;
 * Para recuperar o *token* JWT da requisição no *filter*, devemos chamar o método `request.getHeader("Authorization")`;
 * Para habilitar o filtro no Spring Security, devemos chamar o método `and().addFilterBefore(new AutenticacaoViaTokenFilter(), UsernamePasswordAuthenticationFilter.class)`;
 * Para indicar ao Spring Security que o cliente está autenticado, devemos utilizar a classe `SecurityContextHolder`, chamando o método `SecurityContextHolder.getContext().setAuthentication(authentication)`.
+
+# Autorização Baseada em Roles
+
+Qual a maneira correta de restringir o acesso a determinado endpoint, baseado no perfil do usuário?
+
+Adicionando a chamada ao método `hasRole(“NOME_DO_ROLE”)` no código de configuração do endpoint na classe `SecurityConfigurations`.
+
+Essa é justamente a maneira que aprendemos a restringir o acesso a determinado endpoint, baseado no `role` do usuário.
+
+## Resumo
+
+
+* É possível restringir o acesso a determinados endpoints da aplicação, de acordo com o perfil do usuário autenticado, utilizando o método `hasRole(“NOME_DO_ROLE”)` nas configurações de segurança da aplicação.

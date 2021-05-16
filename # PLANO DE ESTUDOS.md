@@ -9,7 +9,7 @@
 * [X] Curso - Java e JPA: Persista seus objetos com a JPA2 e Hibernate até dia 13/05
 * [X] Spring Boot API REST: Construa uma API até dia 14/05
 * [X] Spring Boot API Rest: Segurança da API, Cache e Monitoramento até dia 14/05
-* [ ] Spring Boot e Teste: Profiles, Testes e Deploy até dia 15/05
+* [X] Spring Boot e Teste: Profiles, Testes e Deploy até dia 15/05
 * [ ] Spring Data JPA: Repositórios, Consultas, Projeções e Specifications até dia 16/05
 * [ ] SOLID com Java: Orientação a Objetos com Java até dia 16/05
 
