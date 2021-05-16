@@ -24,9 +24,7 @@ O módulo **DevTools** inclui ferramentas utilitárias no projeto, dentre elas a
 * Representação de recursos (Json, XML, HTML, PDF, XHTML . . .)
 * Comunicação Stateless
 
-
 ## Resumo
-
 
 * Sobre a API que desenvolveremos ao longo do curso e sobre as classes de domínio dela;
 * Que, para um método no *controller* não encaminhar a requisição a uma página `JSP`, ou `Thymeleaf`, devemos utilizar a anotação `@ResponseBody`;
@@ -35,7 +33,6 @@ O módulo **DevTools** inclui ferramentas utilitárias no projeto, dentre elas a
 * Que, para não precisar reiniciar manualmente o servidor a cada alteração feita no código, basta utilizar o módulo **Spring Boot DevTools**;
 * Que não é uma boa prática retornar entidades JPA nos métodos dos *controllers*, sendo mais indicado retornar classes que seguem o padrão **DTO** (*Data Transfer Object*);
 * Os principais conceitos sobre o modelo arquitetural **REST**, como **recursos**, **URIs**, **verbos HTTP**, **Representações** e comunicação ***stateless***.
-
 
 # Spring Data JPA
 
@@ -91,8 +88,8 @@ findByCursoNome(String nomeCurso);
 Também é válido separar o nome do atributo, que representa o relacionamento, do nome do atributo a ser filtrado, com o uso do operador `_`.
 
 findByCurso_Nome(String nomeCurso);
-## Resumo
 
+## Resumo
 
 * Para utilizar o JPA no projeto, devemos incluir o módulo `Spring Boot Data JPA`, que utiliza o **Hibernate**, por padrão, como sua implementação;
 * Para configurar o banco de dados da aplicação, devemos adicionar as propriedades do *datasource* e do JPA no arquivo **`src/main/resources/application.properties`**;
@@ -122,7 +119,6 @@ Se algum método em uma classe `Controller` não tiver retorno, ou seja, se ele 
 
 ## Resumo
 
-
 * Que para evitar repetir a URL em todos os métodos, devemos utilizar a anotação `@RequestMapping` em cima da classe *controller*;
 * Que para mapear requisições do tipo POST, devemos utilizar a anotação `@PostMapping`;
 * Que para receber dados enviados no corpo da requisição, a boa prática é criar uma classe que também siga o padrão **DTO** (*Data Transfer Object*);
@@ -148,7 +144,6 @@ O Spring tem uma solução para esse tipo de cenário. A solução é criar uma 
 O objetivo de se utilizar a anotação `@ResponseStatus` na classe que representa o `RestControllerAdvice` é alterar o *status code* devolvido como resposta. O *status code* padrão a ser devolvido será o 200, mas é possível modificá-lo com a anotação `@ResponseStatus`.
 
 ## Resumo
-
 
 * Para fazer validações das informações enviadas pelos clientes da API, podemos utilizar a especificação ***Bean Validation***, com as anotações `@NotNull`, `@NotEmpty`, `@Size`, dentre outras;
 * Para o Spring disparar as validações do *Bean Validation* e devolver um erro 400, caso alguma informação enviada pelo cliente esteja inválida, devemos utilizar a anotação `@Valid`;
@@ -186,7 +181,6 @@ A anotação `@DeleteMapping` é mais apropriada para se utilizar nos métodos d
 
 ## Resumo
 
-
 * Para receber parâmetros dinâmicos no *path* da URL, devemos utilizar a anotação `@PathVariable`;
 * Para mapear requisições do tipo `PUT`, devemos utilizar a anotação `@PutMapping`;
 * Para fazer o controle transacional automático, devemos utilizar a anotação `@Transactional` nos métodos do *controller*;
@@ -195,9 +189,7 @@ A anotação `@DeleteMapping` é mais apropriada para se utilizar nos métodos d
 * O método `getOne` lança uma *exception* quando o `id` passado como parâmetro não existir no banco de dados;
 * O método `findById` retorna um objeto `Optional<>`, que pode ou não conter um objeto.
 
-
 # Exercício
-
 
 Antes de pularmos para a parte da atividade onde você vai precisar descrever como faria determinada implementação, vamos começar pelo básico. Qual a utilidade do Spring Boot?
 
@@ -218,3 +210,22 @@ Agora que o cadastro foi feito, é necessário que os detalhes de cada aluno(a) 
 Usando o que foi visto durante o curso,  descreva todos os passos que você faria desde conseguir tratar a requisição feita para determinado endereço até retornar as informações do(a) aluno(a) em formato JSON.
 
 Resposta: Criaria uma classe dto, apenas com nome e email, um construtor que recebe um objeto da classe modelo e os getters. Na classe controller criaria um novo método usando `ResponseEntity<ClasseDto> ` recebendo como parametro id do tipo Long com a anotação PathVariable, dentro do método instaciaria um objeto da Optional da classe Modelo usando a classe repository criada anteriormente juntamente com o método findById passando a id recebida. Criaria uma condiciona para verificar se existe o objeto no banco de dados, caso exista o retorno é através do método Ok  de ResponseEntity passando um objeto do tipo dto, caso a condicional seja false, o retorno é notFound de ResponseEntity.
+
+# Exercício
+
+
+Já temos muitos alunos e alunas cadastradas e agora temos muito acesso para visualizar os perfis. Além disso, temos um novo endpoint de listagem e essa lista só cresce. Para fechar, é mais do que importante a gente controlar o acesso a tais informações.
+
+Dado que as informações cadastradas dos alunos e alunas quase nunca muda, o que você faria para evitar que a recuperação dessa informação fosse feita sempre a partir do banco de dados?
+
+Resposta: Incluiria as dependencias do spring boot cache no pom.xml e habilitar usando notação na classe principal do projeto. Anotaria o método que faz a listagem dos alunos e detalhamento com `@Cacheable` passando parametro value com uma id diferenciando cada um deles, depois incluiria a invalidação dos cache, nos endpoints de alteração de registros com `@CacheEvict` passando a id dos caches.
+
+Na listagem é importante trabalharmos com dados paginados.
+
+Descreva em detalhes os passos de implementação que você faria para possibilitar que a aplicação cliente pudesse acessar as informações de paginada e porque realizar a paginação é importante.
+
+Respostas: Habilitaria na classe principal da aplicação `@EnableSpringDataWebSupport`, utilizaria a interface Pageable na classe repository criando um método de busca que retorna um objeto `Page<T>` e recebe como parâmetro um objeto Pageable. No controller, substituiria on metodo de listagem que usa `List<classDTO>` por `Page<classDTO>` e na assinatura do método incluiria uma anotação para configurar uma paginação padrão, pois mesmo que não seja informado os dados de paginação, ainda assim o resultado será paginado, criaria uma estrutura de condição para verificar se algum parâmetro foi passado, para tratar a busca e o retorno das informações.
+
+Para fechar, descreva como funciona o mecanismo de autenticação e autorização para uma API Rest através de tokens.
+
+Resposta: O mecanismo funciona através de um módulo de segurança do Spring, chamado spring security. Que vai facilitar a implementação de autenticação e autorização usando Token. Para isso é necessário configurar através de uma classe especifica, onde você irá determinar todos os parâmetros de segurança da API. Quando o módulo é ativado, por padrão todos os endpoints são bloqueados para acesso, então é necessário liberar os endpoints de interesse, e criar um controller para autenticação, é onde receberá os dados de login, e gerará um token de autenticação através de uma classe de serviço que verifica se o usuários está logado ou não e se estiver gera um token usa a biblioteca JWT, e retorna-lo para o cliente, para futuras requisições depois vem o processo de autenticação usando o token, que é enviado no cabeçalho da requisição, onde é recebido pela aplicação e submetido a a verificação, onde é validado o token, caso seja válido a requisição é aceita, caso contrario um erro é retornado também na classe de configuração de autorização é necessário informar a politica de sessão com STATELESS, informar a classe que gera e valida tokens e a classe repository que representa o usuário do sistema.
