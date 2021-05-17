@@ -11,7 +11,7 @@
 * [X] Spring Boot API Rest: Segurança da API, Cache e Monitoramento até dia 14/05
 * [X] Spring Boot e Teste: Profiles, Testes e Deploy até dia 15/05
 * [X] Spring Data JPA: Repositórios, Consultas, Projeções e Specifications até dia 16/05
-* [ ] SOLID com Java: Orientação a Objetos com Java até dia 16/05
+* [X] SOLID com Java: Orientação a Objetos com Java até dia 16/05
 
 ### FASE 3
 
