@@ -17,7 +17,7 @@
 
 * [X] Implementar desafio da editora Caso do Código até dia 19/05
 * [X] Curso de Java e Teste: Test Driven Development com JUnit até 21/05
-* [ ] Curso de Integração: Testes SQL e DAOs automatizados em Java 23/05
+* [X] Curso de Integração: Testes SQL e DAOs automatizados em Java 23/05
 * [ ] Implementar o desafio de contrução de uma API que simula parte do funcionamento do mercado livre até 28/05
 
 ### FASE 4
