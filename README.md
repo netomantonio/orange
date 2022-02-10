@@ -209,7 +209,7 @@ Olhe para o céu, escolha uma estrela e tente concentrar apenas nela.
 
 abaixo segue um fluxograma baseado no conteúdo apresentado anteriormente e seu objetivo é facilitar a execução das técnicas e procedimentos aqui descritos.
 
-[![fluxograma de aprendizado](https://github.com/netomantonio/aprendizado/raw/main/Fluxograma.png)](https://github.com/netomantonio/aprendizado/blob/main/Fluxograma.png)
+[![fluxograma de aprendizado](https://i.ibb.co/sbwLwCb/image.png)]https://i.ibb.co/sbwLwCb/image.png)
 
 # IMPORTANTE
 
